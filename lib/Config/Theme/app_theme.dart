@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 
 class AppTheme{
+  final Color selectedColor;
+  final bool isDarkMode;
+
+  AppTheme({this.isDarkMode = false, this.selectedColor = Colors.green});
+  
   ThemeData getTheme() => ThemeData(
-    brightness: Brightness.light,
     useMaterial3: true,
-    colorSchemeSeed: Colors.green,
+    brightness: isDarkMode ? Brightness.dark : Brightness.light,
+    colorSchemeSeed: selectedColor,
+    appBarTheme: const AppBarTheme(centerTitle: false),
   );
+
+  AppTheme copyWith({Color? selectedColor, bool? isDarkMode}) => AppTheme(
+    selectedColor: selectedColor ?? this.selectedColor,
+    isDarkMode: isDarkMode ?? this.isDarkMode
+  );
+  
 }
