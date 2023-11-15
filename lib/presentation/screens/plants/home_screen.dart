@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:plantify/presentation/screens/widgets/shared/custom_bottom_navigationbar.dart';
+import 'package:plantify/presentation/widgets/shared/google_bottom_navbar.dart';
 
 class HomeScreen extends StatelessWidget {
   static const name = 'home-screen';
@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: currentChild,
-      bottomNavigationBar: CustomBottomNavigationBar(currentChild: currentChild,),
+      bottomNavigationBar: GoogleBottomNavBar(currentChild: currentChild,),
     );
   }
 }

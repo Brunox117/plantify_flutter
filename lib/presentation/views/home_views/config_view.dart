@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plantify/presentation/providers/providers.dart';
+import 'package:plantify/presentation/widgets/widgets.dart';
 
 class ConfigView extends ConsumerWidget implements PreferredSizeWidget {
   const ConfigView({super.key});
@@ -9,17 +10,10 @@ class ConfigView extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final textStyles = Theme.of(context).textTheme;
-    final colors = Theme.of(context).colorScheme;
     final isDarkMode = ref.watch(darkModeProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: colors.secondary.withOpacity(0.4),
-        title: Text(
-          'Configuración',
-          style: textStyles.titleLarge,
-        ),
-      ),
+      appBar: CustomAppbar(title: 'Configuración'),
       body: ListView(
         physics: const ClampingScrollPhysics(),
         children: [
@@ -59,6 +53,12 @@ Future colorPickerDialog(BuildContext context, WidgetRef ref) {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0.0)),
       content: SingleChildScrollView(
         child: BlockPicker(
+          availableColors: const [
+            Color(0xff29B6F6),
+            Color(0xff4CAF50),
+            Color(0xffF57F17),
+            Color(0xffD50000),
+          ],
           pickerColor: colors.primary,
           onColorChanged: (value) {
             ref.read(selectedColorProvider.notifier).changeSelectedColor(value);
@@ -75,7 +75,7 @@ Future colorPickerDialog(BuildContext context, WidgetRef ref) {
           onPressed: () {
             Navigator.of(context).pop(false);
           },
-          child: Text('CLOSE', style: TextStyle(color: colors.primary)),
+          child: Text('CERRAR', style: TextStyle(color: colors.primary)),
         ),
       ],
     ),
