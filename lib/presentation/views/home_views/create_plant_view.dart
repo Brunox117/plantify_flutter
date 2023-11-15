@@ -39,17 +39,34 @@ class _PlantForm extends ConsumerWidget {
             const SizedBox(
               height: 10,
             ),
-            CustomFormField(
+            const CustomFormField(
                 isTopField: true,
                 hint: 'Nombre de la planta',
                 hintStyle: TextStyle(
                   color: Colors.black45,
                 )),
-            CustomFormField(
-              hint: 'Hora de riego',
-              hintStyle: TextStyle(color: Colors.black45),
+            //Create a buttom that displays a timepicker
+            FilledButton.tonal(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(colors.primary),
+              foregroundColor: MaterialStateProperty.all(colors.onPrimary),
             ),
-            CustomFormField(
+            onPressed: () async {
+              // Despliega el timePicker
+              final selectedHour = await showTimePicker(
+                context: context,
+                initialTime: TimeOfDay.now(),
+                helpText: 'Selecciona una hora',
+                cancelText: 'Cancelar',
+              );
+              //! AQUI YA DEBERIAMOS TENER LA HORA SELECCIONADA
+            },
+            child: const Text('Seleccionar hora de riego'),
+          ),
+            const SizedBox(
+              height: 30,
+            ),
+            const CustomFormField(
               hint: 'Información adicional',
               isBottomField: true,
               maxLines: 7,
@@ -58,7 +75,7 @@ class _PlantForm extends ConsumerWidget {
             const SizedBox(height: 10,),
             Center(
               child: IconButton(
-                  onPressed: () {}, icon: Icon(Icons.add_box_outlined, size: 70, color: colors.secondary,)),
+                  onPressed: () {}, icon: Icon(Icons.add_circle_outline_rounded, size: 70, color: colors.secondary,)),
             ),
           ],
         ),

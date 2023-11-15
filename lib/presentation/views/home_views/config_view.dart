@@ -13,7 +13,7 @@ class ConfigView extends ConsumerWidget implements PreferredSizeWidget {
     final isDarkMode = ref.watch(darkModeProvider);
 
     return Scaffold(
-      appBar: CustomAppbar(title: 'Configuración'),
+      appBar: const CustomAppbar(title: 'Configuración'),
       body: ListView(
         physics: const ClampingScrollPhysics(),
         children: [

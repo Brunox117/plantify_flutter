@@ -1,8 +1,10 @@
 # plantify
 
-A new Flutter project.
+A flutter app that sets reminders to water plants.
 
-Ejecutar el build runner 
+## Getting Started 
+
+Run the build runner
 ```
 dart run build_runner watch
 ```
