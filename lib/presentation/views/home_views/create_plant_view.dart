@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:plantify/presentation/providers/providers.dart';
 import 'package:plantify/presentation/widgets/widgets.dart';
 
 class CreatePlantView extends StatelessWidget {
@@ -17,10 +18,10 @@ class CreatePlantView extends StatelessWidget {
 
 class _PlantForm extends ConsumerWidget {
   //final Plant plant;
-
+  
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final isDarkMode = ref.watch(darkModeProvider);
+    final plantForm = ref.watch(createPlantProvider);
     final colors = Theme.of(context).colorScheme;
     final textStyles = Theme.of(context).textTheme;
     return ListView(children: [
@@ -39,18 +40,17 @@ class _PlantForm extends ConsumerWidget {
             const SizedBox(
               height: 10,
             ),
-            const CustomFormField(
+            CustomFormField(
                 isTopField: true,
                 hint: 'Nombre de la planta',
-                hintStyle: TextStyle(
+                onChanged: (value) => ref.read(createPlantProvider.notifier).onPlantNameChanged(value),
+                errorMessage: plantForm.plantName.errorMessage,
+                hintStyle: const TextStyle(
                   color: Colors.black45,
                 )),
+            const SizedBox(height: 10,),
             //Create a buttom that displays a timepicker
-            FilledButton.tonal(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(colors.primary),
-              foregroundColor: MaterialStateProperty.all(colors.onPrimary),
-            ),
+            ElevatedButton(
             onPressed: () async {
               // Despliega el timePicker
               final selectedHour = await showTimePicker(
@@ -59,23 +59,28 @@ class _PlantForm extends ConsumerWidget {
                 helpText: 'Selecciona una hora',
                 cancelText: 'Cancelar',
               );
-              //! AQUI YA DEBERIAMOS TENER LA HORA SELECCIONADA
+              ref.read(createPlantProvider.notifier).onWaterHourChanged(selectedHour!);
             },
             child: const Text('Seleccionar hora de riego'),
           ),
+          const SizedBox(height: 10,),
+          Text('La hora seleccionada es: ${plantForm.waterHour.value.format(context)}'),
             const SizedBox(
               height: 30,
             ),
-            const CustomFormField(
+            CustomFormField(
               hint: 'Información adicional',
               isBottomField: true,
               maxLines: 7,
-              hintStyle: TextStyle(color: Colors.black45),
+              hintStyle: const TextStyle(color: Colors.black45),
+              onChanged: (value) => ref.read(createPlantProvider.notifier).onDescriptionChanged(value),
             ),
             const SizedBox(height: 10,),
             Center(
               child: IconButton(
-                  onPressed: () {}, icon: Icon(Icons.add_circle_outline_rounded, size: 70, color: colors.secondary,)),
+                  onPressed: () {
+                    ref.read(createPlantProvider.notifier).onSubmit();
+                  }, icon: Icon(Icons.add_circle_outline_rounded, size: 70, color: colors.secondary,)),
             ),
           ],
         ),

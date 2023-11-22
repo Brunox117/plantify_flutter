@@ -1,4 +1,5 @@
 
+import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 
 enum NameError { empty }
@@ -22,9 +23,9 @@ class PlantName extends FormzInput<String, NameError> {
   }
 }
 
-class WaterHour extends FormzInput<String, WaterHourError> {
-  const WaterHour.pure() : super.pure('');
-  const WaterHour.dirty([String value = '']) : super.dirty(value);
+class WaterHour extends FormzInput<TimeOfDay, WaterHourError> {
+  const WaterHour.pure() : super.pure(const TimeOfDay(hour: 00, minute: 00));
+  const WaterHour.dirty([TimeOfDay value = const TimeOfDay(hour: 00, minute: 00)]) : super.dirty(value);
 
   String? get errorMessage {
     if (error == WaterHourError.empty) {
@@ -37,11 +38,14 @@ class WaterHour extends FormzInput<String, WaterHourError> {
   }
 
   @override
-  WaterHourError? validator(String? value) {
-    if (value?.isEmpty == true) {
+  WaterHourError? validator(TimeOfDay? value) {
+    if (value?.toString().isEmpty == true) {
       return WaterHourError.empty;
     }
-    //TODO validate hour format
+    if((value is TimeOfDay) == false){
+      return WaterHourError.format;
+    }
     return null;
   }
 }
+

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Plant {
   String plantName;
-  HourFormat waterHour;
+  TimeOfDay waterHour;
   String? description;
   Plant({
     required this.plantName,
